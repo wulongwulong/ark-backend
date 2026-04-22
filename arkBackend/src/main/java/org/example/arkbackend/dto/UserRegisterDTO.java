@@ -1,9 +1,7 @@
-package org.example.arkbackend;
+package org.example.arkbackend.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-
-import javax.lang.model.element.NestingKind;
 
 /**
  * 注册 bean
@@ -12,7 +10,7 @@ import javax.lang.model.element.NestingKind;
 public class UserRegisterDTO {
 
     @NotBlank(message ="注册名不能为空")
-    private String userName ;
+    private String username ;
 
     @NotBlank(message = "密码不能为空")
     private String password ;
