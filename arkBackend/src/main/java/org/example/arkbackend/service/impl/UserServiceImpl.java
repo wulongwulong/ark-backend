@@ -86,6 +86,11 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    /**
+     * 将user转为vo（给前端的数据格式）
+     * @param user
+     * @return UserVO
+     */
     private UserVO toVO(User user) {
         UserVO vo = new UserVO();
         vo.setId(user.getId());
