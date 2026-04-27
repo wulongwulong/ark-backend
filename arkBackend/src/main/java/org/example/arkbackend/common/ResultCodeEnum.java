@@ -6,7 +6,7 @@ public enum ResultCodeEnum {
     PARAM_ERROR(1001, "参数错误"),
     USER_NOT_FOUND(1002, "用户不存在"),
     USERNAME_EXIST(1003, "用户名已存在"),
-    SYSTEM_ERROR(5000, "系统异常");
+    SYSTEM_ERROR(5000, "---***系统异常***---");
 
     private final int code;
     private final String message;

@@ -84,9 +84,16 @@ public class UserController {
 
     // 测试异常处理切面的接口
     @GetMapping("/test-exception")
-    public Result<String> testException() {
+    public Result<String> testException()  {
         // 故意抛出异常，测试AfterThrowingAspect
         throw new RuntimeException("测试异常处理切面");
+    }
+
+    // 测试异常处理切面的接口
+    @GetMapping("/test-exception1")
+    public Result<String> testException1() throws Exception {
+        // 故意抛出异常，测试兜底异常
+        throw new Exception("我手动测试 Exception 兜底异常");
     }
 
 

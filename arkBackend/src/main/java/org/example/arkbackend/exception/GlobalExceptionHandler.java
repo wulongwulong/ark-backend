@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public Result<?> handleBusinessException(BusinessException e) {
-        log.warn("业务异常：code={}, message={}", e.getCode(), e.getMessage());
+        log.error("业务异常：code={}, message={}", e.getCode(), e.getMessage());
         return Result.fail(e.getCode(), e.getMessage());
     }
 
@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
         if (e.getBindingResult().hasFieldErrors()) {
             message = e.getBindingResult().getFieldErrors().get(0).getDefaultMessage();
         }
-        log.warn("参数异常：{}", message);
+        log.error("参数异常：{}", message);
         return Result.fail(ResultCodeEnum.PARAM_ERROR.getCode(), message);
     }
 
@@ -38,16 +38,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public Result<?> handleException(Exception e) {
-        log.error("系统异常：", e);
+        log.error("系统异常(兜底)：", e);
         return Result.fail(ResultCodeEnum.SYSTEM_ERROR.getCode(),
                 ResultCodeEnum.SYSTEM_ERROR.getMessage());
     }
-
-
-//    @ExceptionHandler(Exception.class)
-//    public Result<?> handleException(Exception e) {
-//        log.error("系统异常：", e);
-//        return Result.fail(ResultCodeEnum.SYSTEM_ERROR);
-//    }
 
 }
