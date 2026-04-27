@@ -8,6 +8,7 @@ import org.example.arkbackend.dto.UserUpdateDTO;
 import org.example.arkbackend.entity.User;
 import org.example.arkbackend.mapper.UserMapper;
 import org.example.arkbackend.service.UserService;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -19,20 +20,34 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String register(UserRegisterDTO dto) {
+
         User user = new User();
         user.setUsername(dto.getUsername());
         user.setPassword(dto.getPassword());
 
-//        // ✅ 在这里赋值
-//        user.setCreateTime(LocalDateTime.now());
+        try {
+            userMapper.insert(user);
+            return "注册成功";
+        } catch (DuplicateKeyException e) {
+            return "用户名已存在";
+        }
 
-        userMapper.insert(user);
-        return "注册成功";
     }
 
     @Override
     public String updateUser(UserUpdateDTO dto) {
-        return "";
+        User user = new User();
+        user.setId(dto.getId());
+        user.setUsername(dto.getUsername());
+        user.setPassword(dto.getPassword());
+
+        int affectedRows = userMapper.updateByUser(user);
+
+        if (affectedRows == 0) {
+            return "用户不存在";
+        }
+
+        return "更新成功";
     }
 
     @Override
@@ -60,9 +75,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public Boolean deleteUser(Long id) {
         log.info("删除用户：{}", id);
-        userMapper.deleteById(id);
+        int affectedRows = userMapper.deleteById(id);
+        if (affectedRows == 0) {
+            return false;
+        }else {
+            return true ;
+        }
+
     }
 
     private UserVO toVO(User user) {

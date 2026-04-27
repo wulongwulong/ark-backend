@@ -21,12 +21,12 @@
 
     <!-- 新增用户 -->
     <insert id="insert">
-        insert into user (username, password, create_time)
-        values (#{username}, #{password}, #{createTime})
+        insert into user (username, password)
+        values (#{username}, #{password})
     </insert>
 
     <!-- 根据ID更新用户 -->
-    <update id="updateById">
+    <update id="updateByUser">
         update user
         set username = #{username},
             password = #{password}

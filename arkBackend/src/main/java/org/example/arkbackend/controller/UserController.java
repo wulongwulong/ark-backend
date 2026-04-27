@@ -10,11 +10,7 @@ import org.example.arkbackend.service.UserService;
 import org.example.arkbackend.common.Result;
 import org.example.arkbackend.common.ResultCodeEnum;
 import org.example.arkbackend.vo.UserVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 用户增删改查接口
@@ -59,13 +55,14 @@ public class UserController {
     //put请求
     @PutMapping("/update")
     public Result<String> update(@RequestBody UserUpdateDTO dto) {
+        log.info("更新的用户：{}", dto);
         String result = userService.updateUser(dto);
         return Result.success(result);
     }
 
     //delete请求
     @DeleteMapping("/delete/{id}")
-    public Result<Void> delete(@PathVariable Long id) {
+    public Result<String> delete(@PathVariable Long id) {
 //        return "删除用户：" + id;
 
         if (id <= 0) {
@@ -77,9 +74,19 @@ public class UserController {
             throw new BusinessException(ResultCodeEnum.USER_NOT_FOUND);
         }
 
-        userService.deleteUser(id);
-        return Result.success(null);
+        if (userService.deleteUser(id)){
+            return Result.success("删除success");
+        }else {
+            return Result.fail(ResultCodeEnum.USER_NOT_FOUND, "用户不存在");
+        }
 
+    }
+
+    // 测试异常处理切面的接口
+    @GetMapping("/test-exception")
+    public Result<String> testException() {
+        // 故意抛出异常，测试AfterThrowingAspect
+        throw new RuntimeException("测试异常处理切面");
     }
 
 

@@ -57,6 +57,6 @@ public interface UserService {
      *
      * @param id 用户ID
      */
-    void deleteUser(Long id);
+    Boolean deleteUser(Long id);
 
 }

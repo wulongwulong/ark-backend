@@ -23,7 +23,7 @@ public interface UserMapper {
     /**
      * 更新用户
      */
-    int updateById(User user);
+    int updateByUser(User user);
 
     /**
      * 删除用户

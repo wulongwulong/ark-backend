@@ -10,7 +10,9 @@ public class UserUpdateDTO {
     @NotNull
     private Long id;
 
+    @NotBlank(message ="名不能为空")
     private String username;
 
+    @NotBlank(message ="密码不能为空")
     private String password;
 }
